@@ -1,0 +1,22 @@
+{
+  "name": "menujs",
+  "version": "1.0.0",
+  "description": "vue menu",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GitHub-Laziji/menujs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GitHub-Laziji/menujs/issues"
+  },
+  "homepage": "https://github.com/GitHub-Laziji/menujs#readme",
+  "dependencies": {
+    "vue": "^2.6.10"
+  }
+}
