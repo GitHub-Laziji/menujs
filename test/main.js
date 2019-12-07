@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import ContextMenu from "../src/index"
+import ContextMenu from "../"
 Vue.use(ContextMenu);
 new Vue({
    render: h => h(App),
