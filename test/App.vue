@@ -21,7 +21,7 @@ export default {
           },
           {
             label: "粘贴",
-            icon: "paste",
+            // icon: "paste",
             disabled: true,
             onClick: () => {
               this.message = "点击粘贴";
