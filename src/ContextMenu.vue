@@ -73,7 +73,6 @@ export default {
   background: #fff;
   border-radius: 4px;
   padding: 8px 0;
-  width: 140px;
 }
 .menu_body {
   display: block;
