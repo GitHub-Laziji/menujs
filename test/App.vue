@@ -21,13 +21,29 @@ export default {
           },
           {
             label: "粘贴",
+            icon: "paste",
+            disabled: true,
             onClick: () => {
               this.message = "点击粘贴";
             }
+          },
+          {
+            label: "查看",
+            onClick: () => {
+              this.message = "点击查看";
+            }
+          },
+          {
+            label: "测试",
+            hidden: true,
+            onClick: () => {
+              this.message = "点击测试";
+            }
           }
         ],
-        x: event.clientX,
-        y: event.clientY
+        event,
+        customClass: "class-a",
+        zIndex: 3
       });
       return false;
     };

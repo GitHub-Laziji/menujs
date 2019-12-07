@@ -8,9 +8,9 @@
       <div :class="$style.menu_body">
         <template v-for="(item,index) of items">
           <div
-            :class="$style.menu_item"
+            :class="[$style.menu_item,item.disabled?$style.menu_item_disabled:$style.menu_item_available]"
             :key="index"
-            @click="()=>item.onClick()"
+            @click="itemClick(item)"
             v-if="!item.hidden"
           >
             <i :class="item.icon" v-if="item.icon"></i>
@@ -44,8 +44,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.visible = true;
-      this.mouseListening = true;
-      document.addEventListener("mouseup", this.mouseListener);
+      this.addListener();
       this.$nextTick(() => {
         const PADDING = 8;
         const windowWidth = document.documentElement.clientWidth;
@@ -66,28 +65,90 @@ export default {
   },
   destroyed() {
     if (this.mouseListening) {
-      document.removeEventListener("mouseup", this.mouseListener);
+      this.removeListener();
     }
   },
   methods: {
-    mouseListener(e) {
+    itemClick(item) {
+      if (
+        item &&
+        !item.disabled &&
+        !item.hidden &&
+        typeof item.onClick === "function"
+      ) {
+        return item.onClick();
+      }
+      return true;
+    },
+    mousewheelListener() {
+      this.closeContextmenu();
+    },
+    mouseDownListener(e) {
       const menu = this.getMenuElement();
-      const menuBody = document.querySelector("." + this.$style.menu_body);
       let el = e.target;
-      while (el != menu && el != menuBody && el.parentElement) {
+      while (el != menu && el.parentElement) {
         el = el.parentElement;
       }
-      if (
-        (el != menuBody && el != menu) ||
-        (el == menuBody && e.button === 0)
-      ) {
-        document.removeEventListener("mouseup", this.mouseListener);
-        this.visible = false;
-        this.mouseListening = false;
-        this.$nextTick(() => {
-          this.$destroy();
-        });
+      if (el != menu) {
+        this.closeContextmenu();
       }
+    },
+    mouseUpListener(e) {
+      const menu = this.getMenuElement();
+      let el = e.target;
+      while (
+        el != menu &&
+        !this.hasClass(el, this.$style.menu_item) &&
+        el.parentElement
+      ) {
+        el = el.parentElement;
+      }
+      if (this.hasClass(el, this.$style.menu_item)) {
+        if (
+          e.button !== 0 ||
+          this.hasClass(el, this.$style.menu_item_disabled)
+        ) {
+          return;
+        }
+        this.closeContextmenu();
+        return;
+      }
+      if (el != menu) {
+        this.closeContextmenu();
+      }
+    },
+    closeContextmenu() {
+      this.removeListener();
+      this.visible = false;
+      this.$nextTick(() => {
+        this.$destroy();
+      });
+    },
+    addListener() {
+      document.addEventListener("mouseup", this.mouseUpListener);
+      document.addEventListener("mousedown", this.mouseDownListener);
+      document.addEventListener("mousewheel", this.mousewheelListener);
+      this.mouseListening = true;
+    },
+    removeListener() {
+      document.removeEventListener("mouseup", this.mouseListener);
+      document.removeEventListener("mousedown", this.mouseDownListener);
+      document.removeEventListener("mousewheel", this.mousewheelListener);
+      this.mouseListening = false;
+    },
+    hasClass(el, className) {
+      if (!className) {
+        return true;
+      }
+      if (!el || !el.className) {
+        return false;
+      }
+      for (let cn of el.className.split(/\s+/)) {
+        if (cn === className) {
+          return true;
+        }
+      }
+      return false;
     },
     getMenuElement() {
       return document.querySelector("." + this.$style.menu);
@@ -117,8 +178,6 @@ export default {
   padding: 0 20px;
   margin: 0;
   font-size: 14px;
-  color: #606266;
-  cursor: pointer;
   outline: 0;
   display: flex;
   align-items: center;
@@ -126,8 +185,27 @@ export default {
 .menu_item i {
   margin-right: 5px;
 }
-.menu_item:hover {
+.menu_item_available {
+  color: #606266;
+  cursor: pointer;
+}
+.menu_item_available:hover {
   background: #ecf5ff;
   color: #409eff;
+}
+.menu_item_disabled {
+  color: #c0c4cc;
+  cursor: not-allowed;
+}
+</style>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

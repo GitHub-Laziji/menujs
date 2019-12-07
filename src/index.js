@@ -6,8 +6,13 @@ export default {
     Vue.prototype.$contextmenu = (options) => {
       let instance = new ContextmenuConstructor();
       instance.items = options.items;
-      instance.position.x = options.x;
-      instance.position.y = options.y;
+      instance.position.x = options.x || 0;
+      instance.position.y = options.y || 0;
+      if (options.event) {
+        instance.position.x = options.event.clientX;
+        instance.position.y = options.event.clientY;
+      }
+
       instance.customClass = options.customClass;
       options.zIndex && (instance.style.zIndex = options.zIndex);
       instance.$mount();

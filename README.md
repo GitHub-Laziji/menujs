@@ -21,20 +21,36 @@ Vue.use(Contextmenu);
 <script>
 export default {
   methods: {
-    onContextmenu(e) {
+    onContextmenu(event) {
       this.$contextmenu({
         items: [
           {
             label: "复制",
-            onClick: () => {}
+            disabled: true,
+            onClick: () => {
+              console.log("复制");
+            }
           },
           {
             label: "粘贴",
-            onClick: () => {}
+            icon: "paste",
+            onClick: () => {
+              console.log("粘贴");
+            }
+          },
+          {
+            label: "测试",
+            hidden: true,
+            onClick: () => {
+              console.log("测试");
+            }
           }
         ],
-        x: e.clientX,
-        y: e.clientY
+        event,
+        // x: e.clientX,
+        // y: e.clientY
+        customClass: "class-a",
+        zIndex: 3
       });
       return false;
     }
