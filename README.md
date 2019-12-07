@@ -33,7 +33,7 @@ export default {
           },
           {
             label: "粘贴",
-            icon: "paste",
+            icon: "paste", // => <i class='paste'></i>
             onClick: () => {
               console.log("粘贴");
             }
