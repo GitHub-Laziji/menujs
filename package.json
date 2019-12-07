@@ -1,6 +1,6 @@
 {
   "name": "vue-contextmenujs",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Vue context menu",
   "main": "index.js",
   "scripts": {

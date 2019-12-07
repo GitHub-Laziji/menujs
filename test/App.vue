@@ -1,5 +1,5 @@
 <template>
-  <div id="app" style="width:100vw;height:100vh"></div>
+  <div id="app" style="width:100vw;height:200vh"></div>
 </template>
 
 <script>
@@ -27,4 +27,8 @@ export default {
 </script>
 
 <style>
+body{
+  margin: 0;
+  padding: 0;
+}
 </style>

@@ -1,6 +1,10 @@
 <template>
   <transition name="fade">
-    <div :class="$style.menu" :style="{left:x+'px',top:y+'px'}" v-if="visible">
+    <div
+      :class="[$style.menu, customClass]"
+      :style="{left: style.left + 'px', top: style.top + 'px', zIndex: style.zIndex}"
+      v-if="visible"
+    >
       <div :class="$style.menu_body">
         <template v-for="(item,index) of items">
           <div
@@ -10,7 +14,7 @@
             v-if="!item.hidden"
           >
             <i :class="item.icon" v-if="item.icon"></i>
-            &nbsp;&nbsp;{{item.label}}
+            <span>{{item.label}}</span>
           </div>
         </template>
       </div>
@@ -23,8 +27,16 @@ export default {
   data() {
     return {
       items: [],
-      x: 0,
-      y: 0,
+      position: {
+        x: 0,
+        y: 0
+      },
+      style: {
+        left: 0,
+        top: 0,
+        zIndex: 2
+      },
+      customClass: null,
       mouseListening: false,
       visible: false
     };
@@ -34,6 +46,22 @@ export default {
       this.visible = true;
       this.mouseListening = true;
       document.addEventListener("mouseup", this.mouseListener);
+      this.$nextTick(() => {
+        const PADDING = 8;
+        const windowWidth = document.documentElement.clientWidth;
+        const windowHeight = document.documentElement.clientHeight;
+        const menu = this.getMenuElement();
+        const menuWidth = menu.offsetWidth;
+        const menuHeight = menu.offsetHeight;
+        this.style.left = this.position.x;
+        if (this.position.x + menuWidth + PADDING > windowWidth) {
+          this.style.left -= menuWidth;
+        }
+        this.style.top = this.position.y;
+        if (this.position.y + menuHeight + PADDING > windowHeight) {
+          this.style.top -= menuHeight;
+        }
+      });
     });
   },
   destroyed() {
@@ -43,8 +71,8 @@ export default {
   },
   methods: {
     mouseListener(e) {
-      let menu = document.querySelector("." + this.$style.menu);
-      let menuBody = document.querySelector("." + this.$style.menu_body);
+      const menu = this.getMenuElement();
+      const menuBody = document.querySelector("." + this.$style.menu_body);
       let el = e.target;
       while (el != menu && el != menuBody && el.parentElement) {
         el = el.parentElement;
@@ -60,6 +88,12 @@ export default {
           this.$destroy();
         });
       }
+    },
+    getMenuElement() {
+      return document.querySelector("." + this.$style.menu);
+    },
+    getMenuBodyElement() {
+      return document.querySelector("." + this.$style.menu_body);
     }
   }
 };
@@ -68,11 +102,10 @@ export default {
 <style module>
 .menu {
   position: fixed;
-  z-index: 2;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
   background: #fff;
   border-radius: 4px;
-  padding: 8px 0;
+  padding: 10px 0;
   min-width: 150px;
 }
 .menu_body {
@@ -80,16 +113,18 @@ export default {
 }
 .menu_item {
   list-style: none;
-  line-height: 28px;
-  padding: 0 12px;
+  line-height: 36px;
+  padding: 0 20px;
   margin: 0;
   font-size: 14px;
   color: #606266;
   cursor: pointer;
   outline: 0;
   display: flex;
-  /* justify-content:space-between; */
   align-items: center;
+}
+.menu_item i {
+  margin-right: 5px;
 }
 .menu_item:hover {
   background: #ecf5ff;
