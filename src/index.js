@@ -1,10 +1,10 @@
 import Vue from 'vue';
-import ContextMenu from "./ContextMenu"
-let ContextMenuConstructor = Vue.extend(ContextMenu);
+import Contextmenu from "./Contextmenu"
+let ContextmenuConstructor = Vue.extend(Contextmenu);
 export default {
   install(Vue) {
-    Vue.prototype.$contextMenu = (options) => {
-      let instance = new ContextMenuConstructor();
+    Vue.prototype.$contextmenu = (options) => {
+      let instance = new ContextmenuConstructor();
       instance.items = options.items;
       instance.position.x = options.x;
       instance.position.y = options.y;

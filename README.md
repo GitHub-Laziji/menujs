@@ -8,21 +8,21 @@ npm install vue-contextmenujs
 ```
 
 ```js
-import ContextMenu from "vue-contextmenujs"
-Vue.use(ContextMenu);
+import Contextmenu from "vue-contextmenujs"
+Vue.use(Contextmenu);
 ```
 
 
 ```html
 <template>
-  <div id="app" style="width:100vw;height:100vh" @contextmenu.prevent="onContextMenu"></div>
+  <div id="app" style="width:100vw;height:100vh" @contextmenu.prevent="onContextmenu"></div>
 </template>
 
 <script>
 export default {
   methods: {
-    onContextMenu(e) {
-      this.$contextMenu({
+    onContextmenu(e) {
+      this.$contextmenu({
         items: [
           {
             label: "复制",
