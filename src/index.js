@@ -1,6 +1,11 @@
 import Vue from 'vue';
-import Contextmenu from "./Contextmenu"
+import Contextmenu from "./components/Contextmenu"
+import Submenu from "./components/Submenu"
+import { COMPONENT_NAME } from "./constant";
+
+Vue.component(COMPONENT_NAME, Submenu);
 let ContextmenuConstructor = Vue.extend(Contextmenu);
+
 export default {
   install(Vue) {
     Vue.prototype.$contextmenu = (options) => {
@@ -14,6 +19,7 @@ export default {
       }
 
       instance.customClass = options.customClass;
+      options.minWidth && (instance.style.minWidth = options.minWidth);
       options.zIndex && (instance.style.zIndex = options.zIndex);
       instance.$mount();
       document.body.appendChild(instance.$el);
