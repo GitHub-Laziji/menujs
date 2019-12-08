@@ -77,7 +77,7 @@ export default {
         event,
         customClass: "class-a",
         zIndex: 3,
-        minWidth:50
+        minWidth: 150
       });
       return false;
     };
