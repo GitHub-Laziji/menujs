@@ -9,7 +9,10 @@
         <template v-for="(item,index) of items">
           <template v-if="!item.hidden">
             <div
-              :class="[commonClass.menuItem, commonClass.notClickableMenuItem, $style.menu_item, $style.menu_item_disabled]"
+              :class="[
+                commonClass.menuItem, commonClass.notClickableMenuItem, 
+                $style.menu_item, $style.menu_item_disabled
+              ]"
               :key="index"
               v-if="item.disabled"
             >
@@ -17,7 +20,11 @@
               <span :class="$style.menu_item_label">{{item.label}}</span>
             </div>
             <div
-              :class="[commonClass.menuItem, commonClass.notClickableMenuItem, $style.menu_item, $style.menu_item_available]"
+              :class="[
+                commonClass.menuItem, commonClass.notClickableMenuItem, 
+                $style.menu_item, $style.menu_item_available,
+                activeSubmenu.index===index? $style.menu_item_expand:null
+              ]"
               :key="index"
               @mouseenter="($event)=>enterItem($event,item,index)"
               v-else-if="item.children"
@@ -27,7 +34,10 @@
               <span :class="$style.menu_item_expand_icon">▶</span>
             </div>
             <div
-              :class="[commonClass.menuItem, commonClass.clickableMenuItem, $style.menu_item, $style.menu_item_available]"
+              :class="[
+                commonClass.menuItem, commonClass.clickableMenuItem, 
+                $style.menu_item, $style.menu_item_available
+              ]"
               :key="index"
               @mouseenter="($event)=>enterItem($event,item,index)"
               @click="itemClick(item)"
@@ -49,6 +59,7 @@ import { hasClass } from "../util";
 import {
   WINDOW_EDGE_MARGIN,
   SUBMENU_X_OFFSET,
+  SUBMENU_Y_OFFSET,
   COMPONENT_NAME
 } from "../constant";
 export default {
@@ -62,7 +73,7 @@ export default {
         notClickableMenuItem: null
       },
       activeSubmenu: {
-        index: 0,
+        index: null,
         instance: null
       },
       items: [],
@@ -135,7 +146,7 @@ export default {
       this.activeSubmenu.instance.commonClass = this.commonClass;
       this.activeSubmenu.instance.position = {
         x: menuItemClientRect.x + SUBMENU_X_OFFSET,
-        y: menuItemClientRect.y,
+        y: menuItemClientRect.y + SUBMENU_Y_OFFSET,
         width: menuItemClientRect.width - 2 * SUBMENU_X_OFFSET,
         height: menuItemClientRect.width
       };
@@ -167,9 +178,6 @@ export default {
     },
     getMenuElement() {
       return document.querySelector("." + this.$style.menu);
-    },
-    getMenuBodyElement() {
-      return document.querySelector("." + this.$style.menu_body);
     }
   }
 };
@@ -223,12 +231,19 @@ export default {
   color: #c0c4cc;
   cursor: not-allowed;
 }
+.menu_item_expand {
+  background: #ecf5ff;
+  color: #409eff;
+}
+.menu_item_expand .menu_item_expand_icon {
+  color: #7cbcfc;
+}
 </style>
 
 <style>
 .contextmenu-submenu-fade-enter-active,
 .contextmenu-submenu-fade-leave-active {
-  transition: opacity 0.2s;
+  transition: opacity 0.1s;
 }
 .contextmenu-submenu-fade-enter,
 .contextmenu-submenu-fade-leave-to {

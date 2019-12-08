@@ -87,6 +87,7 @@ export default {
       if (this.mainMenuInstance) {
         this.mainMenuInstance.close();
       }
+      this.$destroy();
     },
     addListener() {
       document.addEventListener("mouseup", this.mouseUpListener);
@@ -95,10 +96,12 @@ export default {
       this.mouseListening = true;
     },
     removeListener() {
-      document.removeEventListener("mouseup", this.mouseListener);
-      document.removeEventListener("mousedown", this.mouseDownListener);
-      document.removeEventListener("mousewheel", this.mousewheelListener);
-      this.mouseListening = false;
+      if (this.mouseListening) {
+        document.removeEventListener("mouseup", this.mouseListener);
+        document.removeEventListener("mousedown", this.mouseDownListener);
+        document.removeEventListener("mousewheel", this.mousewheelListener);
+        this.mouseListening = false;
+      }
     }
   }
 };
@@ -109,6 +112,5 @@ export default {
 .common_menu_item,
 .common_menu_item_clickable,
 .common_menu_item_not_clickable {
-
 }
 </style>

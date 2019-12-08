@@ -22,7 +22,6 @@ export default {
       options.minWidth && (instance.style.minWidth = options.minWidth);
       options.zIndex && (instance.style.zIndex = options.zIndex);
       instance.$mount();
-      document.body.appendChild(instance.$el);
     }
   }
 }
