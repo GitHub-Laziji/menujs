@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div
-      :class="[$style.menu, customClass,commonClass.menu]"
+      :class="[commonClass.menu, $style.menu, customClass]"
       :style="{left: style.left + 'px', top: style.top + 'px', minWidth: style.minWidth + 'px', zIndex: style.zIndex}"
       v-if="visible"
     >
@@ -9,7 +9,7 @@
         <template v-for="(item,index) of items">
           <template v-if="!item.hidden">
             <div
-              :class="[$style.menu_item,$style.menu_item_disabled,commonClass.menuItem,commonClass.notClickableMenuItem]"
+              :class="[commonClass.menuItem, commonClass.notClickableMenuItem, $style.menu_item, $style.menu_item_disabled]"
               :key="index"
               v-if="item.disabled"
             >
@@ -17,7 +17,7 @@
               <span :class="$style.menu_item_label">{{item.label}}</span>
             </div>
             <div
-              :class="[$style.menu_item,$style.menu_item_available,commonClass.menuItem,commonClass.notClickableMenuItem]"
+              :class="[commonClass.menuItem, commonClass.notClickableMenuItem, $style.menu_item, $style.menu_item_available]"
               :key="index"
               @mouseenter="($event)=>enterItem($event,item,index)"
               v-else-if="item.children"
@@ -27,7 +27,7 @@
               <span :class="$style.menu_item_expand_icon">▶</span>
             </div>
             <div
-              :class="[$style.menu_item,$style.menu_item_available,commonClass.menuItem,commonClass.clickableMenuItem]"
+              :class="[commonClass.menuItem, commonClass.clickableMenuItem, $style.menu_item, $style.menu_item_available]"
               :key="index"
               @mouseenter="($event)=>enterItem($event,item,index)"
               @click="itemClick(item)"
@@ -45,6 +45,7 @@
 
 <script>
 import Vue from "vue";
+import { hasClass } from "../util";
 import {
   WINDOW_EDGE_MARGIN,
   SUBMENU_X_OFFSET,
@@ -123,10 +124,7 @@ export default {
         return;
       }
       let el = e.target;
-      while (
-        !this.hasClass(el, this.$style.common_menu_item) &&
-        el.parentElement
-      ) {
+      while (!hasClass(el, this.$style.common_menu_item) && el.parentElement) {
         el = el.parentElement;
       }
       const menuItemClientRect = el.getBoundingClientRect();
@@ -166,32 +164,6 @@ export default {
       this.$nextTick(() => {
         this.$destroy();
       });
-    },
-    getAbsolutePosition(el) {
-      let result = {
-        x: 0,
-        y: 0
-      };
-      while (el != document) {
-        result.x += el.offsetLeft;
-        result.y += el.offsetTop;
-        el = el.parentNode;
-      }
-      return result;
-    },
-    hasClass(el, className) {
-      if (!className) {
-        return true;
-      }
-      if (!el || !el.className) {
-        return false;
-      }
-      for (let cn of el.className.split(/\s+/)) {
-        if (cn === className) {
-          return true;
-        }
-      }
-      return false;
     },
     getMenuElement() {
       return document.querySelector("." + this.$style.menu);

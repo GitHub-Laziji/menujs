@@ -4,6 +4,7 @@
 
 <script>
 import Vue from "vue";
+import { hasClass } from "../util";
 import { COMPONENT_NAME } from "../constant";
 export default {
   data() {
@@ -51,33 +52,33 @@ export default {
     },
     mouseDownListener(e) {
       let el = e.target;
-      while (!this.hasClass(el, this.$style.common_menu) && el.parentElement) {
+      while (!hasClass(el, this.$style.common_menu) && el.parentElement) {
         el = el.parentElement;
       }
-      if (!this.hasClass(el, this.$style.common_menu)) {
+      if (!hasClass(el, this.$style.common_menu)) {
         this.close();
       }
     },
     mouseUpListener(e) {
       let el = e.target;
       while (
-        !this.hasClass(el, this.$style.common_menu) &&
-        !this.hasClass(el, this.$style.common_menu_item) &&
+        !hasClass(el, this.$style.common_menu) &&
+        !hasClass(el, this.$style.common_menu_item) &&
         el.parentElement
       ) {
         el = el.parentElement;
       }
-      if (this.hasClass(el, this.$style.common_menu_item)) {
+      if (hasClass(el, this.$style.common_menu_item)) {
         if (
           e.button !== 0 ||
-          this.hasClass(el, this.$style.common_menu_item_not_clickable)
+          hasClass(el, this.$style.common_menu_item_not_clickable)
         ) {
           return;
         }
         this.close();
         return;
       }
-      if (!this.hasClass(el, this.$style.common_menu)) {
+      if (!hasClass(el, this.$style.common_menu)) {
         this.close();
       }
     },
@@ -98,34 +99,16 @@ export default {
       document.removeEventListener("mousedown", this.mouseDownListener);
       document.removeEventListener("mousewheel", this.mousewheelListener);
       this.mouseListening = false;
-    },
-    hasClass(el, className) {
-      if (!className) {
-        return true;
-      }
-      if (!el || !el.className) {
-        return false;
-      }
-      for (let cn of el.className.split(/\s+/)) {
-        if (cn === className) {
-          return true;
-        }
-      }
-      return false;
     }
   }
 };
 </script>
 
 <style module>
-.common_menu {
-}
-.common_menu_body {
-}
-.common_menu_item {
-}
-.common_menu_item_clickable {
-}
+.common_menu,
+.common_menu_item,
+.common_menu_item_clickable,
 .common_menu_item_not_clickable {
+
 }
 </style>
