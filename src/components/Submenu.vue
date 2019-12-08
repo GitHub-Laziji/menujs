@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade">
+  <transition name="contextmenu-submenu-fade">
     <div
       :class="[commonClass.menu, $style.menu, customClass]"
       :style="{left: style.left + 'px', top: style.top + 'px', minWidth: style.minWidth + 'px', zIndex: style.zIndex}"
@@ -226,12 +226,12 @@ export default {
 </style>
 
 <style>
-.fade-enter-active,
-.fade-leave-active {
+.contextmenu-submenu-fade-enter-active,
+.contextmenu-submenu-fade-leave-active {
   transition: opacity 0.2s;
 }
-.fade-enter,
-.fade-leave-to {
+.contextmenu-submenu-fade-enter,
+.contextmenu-submenu-fade-leave-to {
   opacity: 0;
 }
 </style>
