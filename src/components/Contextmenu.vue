@@ -90,10 +90,12 @@ export default {
       this.$destroy();
     },
     addListener() {
-      document.addEventListener("mouseup", this.mouseUpListener);
-      document.addEventListener("mousedown", this.mouseDownListener);
-      document.addEventListener("mousewheel", this.mousewheelListener);
-      this.mouseListening = true;
+      if (!this.mouseListening) {
+        document.addEventListener("mouseup", this.mouseUpListener);
+        document.addEventListener("mousedown", this.mouseDownListener);
+        document.addEventListener("mousewheel", this.mousewheelListener);
+        this.mouseListening = true;
+      }
     },
     removeListener() {
       if (this.mouseListening) {
