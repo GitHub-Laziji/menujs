@@ -122,6 +122,9 @@ export default {
   },
   methods: {
     enterItem(e, item, index) {
+      if (!this.visible) {
+        return;
+      }
       if (this.activeSubmenu.instance) {
         if (this.activeSubmenu.index === index) {
           return;

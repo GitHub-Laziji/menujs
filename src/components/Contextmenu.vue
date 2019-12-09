@@ -4,7 +4,7 @@
 
 <script>
 import Vue from "vue";
-import { hasClass } from "../util";
+import { getElementsByClassName } from "../util";
 import { COMPONENT_NAME } from "../constant";
 export default {
   data() {
@@ -46,48 +46,50 @@ export default {
     document.body.appendChild(this.mainMenuInstance.$el);
     this.addListener();
   },
+  destroyed() {
+    this.removeListener();
+    if (this.mainMenuInstance) {
+      this.mainMenuInstance.close();
+    }
+  },
   methods: {
     mousewheelListener() {
-      this.close();
+      this.$destroy();
     },
     mouseDownListener(e) {
       let el = e.target;
-      while (!hasClass(el, this.$style.common_menu) && el.parentElement) {
+      const menus = getElementsByClassName(this.$style.common_menu);
+      while (!menus.find(m => m === el) && el.parentElement) {
         el = el.parentElement;
       }
-      if (!hasClass(el, this.$style.common_menu)) {
-        this.close();
+      if (!menus.find(m => m === el)) {
+        this.$destroy();
       }
     },
     mouseUpListener(e) {
       let el = e.target;
+      const menus = getElementsByClassName(this.$style.common_menu);
+      const menuItems = getElementsByClassName(this.$style.common_menu_item);
+      const notClickableMenuItems = getElementsByClassName(
+        this.$style.common_menu_item_not_clickable
+      );
       while (
-        !hasClass(el, this.$style.common_menu) &&
-        !hasClass(el, this.$style.common_menu_item) &&
+        !menus.find(m => m === el) &&
+        !menuItems.find(m => m === el) &&
         el.parentElement
       ) {
         el = el.parentElement;
       }
-      if (hasClass(el, this.$style.common_menu_item)) {
-        if (
-          e.button !== 0 ||
-          hasClass(el, this.$style.common_menu_item_not_clickable)
-        ) {
+      if (menuItems.find(m => m === el)) {
+        if (e.button !== 0 || notClickableMenuItems.find(m => m === el)) {
           return;
         }
-        this.close();
+        this.$destroy();
         return;
       }
-      if (!hasClass(el, this.$style.common_menu)) {
-        this.close();
+      if (!menus.find(m => m === el)) {
+        this.$destroy();
       }
-    },
-    close() {
-      this.removeListener();
-      if (this.mainMenuInstance) {
-        this.mainMenuInstance.close();
-      }
-      this.$destroy();
     },
     addListener() {
       if (!this.mouseListening) {
