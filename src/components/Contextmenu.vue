@@ -3,12 +3,17 @@
 </template>
 
 <script>
-import Vue from "vue";
-import { getElementsByClassName } from "../util";
+import { getElementsByClassName, uuid } from "../util";
 import { COMPONENT_NAME } from "../constant";
 export default {
   data() {
     return {
+      commonClass: {
+        menu: "menu" + uuid(),
+        menuItem: "menuItem" + uuid(),
+        clickableMenuItem: "clickableMenuItem" + uuid(),
+        notClickableMenuItem: "notClickableMenuItem" + uuid()
+      },
       items: [],
       position: {
         x: 0,
@@ -24,15 +29,10 @@ export default {
     };
   },
   mounted() {
-    const SubmenuConstructor = Vue.component(COMPONENT_NAME);
+    const SubmenuConstructor = this.$vue().component(COMPONENT_NAME);
     this.mainMenuInstance = new SubmenuConstructor();
     this.mainMenuInstance.items = this.items;
-    this.mainMenuInstance.commonClass = {
-      menu: this.$style.common_menu,
-      menuItem: this.$style.common_menu_item,
-      clickableMenuItem: this.$style.common_menu_item_clickable,
-      notClickableMenuItem: this.$style.common_menu_item_not_clickable
-    };
+    this.mainMenuInstance.commonClass = this.commonClass;
     this.mainMenuInstance.position = {
       x: this.position.x,
       y: this.position.y,
@@ -58,7 +58,7 @@ export default {
     },
     mouseDownListener(e) {
       let el = e.target;
-      const menus = getElementsByClassName(this.$style.common_menu);
+      const menus = getElementsByClassName(this.commonClass.menu);
       while (!menus.find(m => m === el) && el.parentElement) {
         el = el.parentElement;
       }
@@ -68,10 +68,10 @@ export default {
     },
     mouseUpListener(e) {
       let el = e.target;
-      const menus = getElementsByClassName(this.$style.common_menu);
-      const menuItems = getElementsByClassName(this.$style.common_menu_item);
+      const menus = getElementsByClassName(this.commonClass.menu);
+      const menuItems = getElementsByClassName(this.commonClass.menuItem);
       const notClickableMenuItems = getElementsByClassName(
-        this.$style.common_menu_item_not_clickable
+        this.commonClass.notClickableMenuItem
       );
       while (
         !menus.find(m => m === el) &&
@@ -110,11 +110,3 @@ export default {
   }
 };
 </script>
-
-<style module>
-.common_menu,
-.common_menu_item,
-.common_menu_item_clickable,
-.common_menu_item_not_clickable {
-}
-</style>
