@@ -1,6 +1,7 @@
 <template>
   <transition name="contextmenu-submenu-fade">
     <div
+      ref="menu"
       :class="[commonClass.menu, $style.menu, customClass]"
       :style="{left: style.left + 'px', top: style.top + 'px', minWidth: style.minWidth + 'px', zIndex: style.zIndex}"
       v-if="visible"
@@ -18,6 +19,7 @@
             >
               <i :class="item.icon" v-if="item.icon"></i>
               <span :class="$style.menu_item_label">{{item.label}}</span>
+              <div :class="$style.menu_item_expand_icon"></div>
             </div>
             <div
               :class="[
@@ -31,7 +33,7 @@
             >
               <i :class="item.icon" v-if="item.icon"></i>
               <span :class="$style.menu_item_label">{{item.label}}</span>
-              <span :class="$style.menu_item_expand_icon">▶</span>
+              <div :class="$style.menu_item_expand_icon">▶</div>
             </div>
             <div
               :class="[
@@ -45,7 +47,9 @@
             >
               <i :class="item.icon" v-if="item.icon"></i>
               <span :class="$style.menu_item_label">{{item.label}}</span>
+              <div :class="$style.menu_item_expand_icon"></div>
             </div>
+            <div :key="`${index}-br`" :class="$style.menu_item_hr" v-if="item.divided"></div>
           </template>
         </template>
       </div>
@@ -97,7 +101,7 @@ export default {
     this.$nextTick(() => {
       const windowWidth = document.documentElement.clientWidth;
       const windowHeight = document.documentElement.clientHeight;
-      const menu = this.getMenuElement();
+      const menu = this.$refs.menu;
       const menuWidth = menu.offsetWidth;
       const menuHeight = menu.offsetHeight;
 
@@ -148,7 +152,8 @@ export default {
         width: menuItemClientRect.width - 2 * SUBMENU_X_OFFSET,
         height: menuItemClientRect.width
       };
-      this.activeSubmenu.instance.style.minWidth = this.style.minWidth;
+      this.activeSubmenu.instance.style.minWidth =
+        typeof item.minWidth === "number" ? item.minWidth : this.style.minWidth;
       this.activeSubmenu.instance.style.zIndex = this.style.zIndex;
       this.activeSubmenu.instance.customClass = this.customClass;
       this.activeSubmenu.instance.$mount();
@@ -173,9 +178,6 @@ export default {
       this.$nextTick(() => {
         this.$destroy();
       });
-    },
-    getMenuElement() {
-      return document.querySelector("." + this.$style.menu);
     }
   }
 };
@@ -194,14 +196,17 @@ export default {
 }
 .menu_item {
   list-style: none;
-  line-height: 36px;
+  line-height: 32px;
   padding: 0 20px;
   margin: 0;
-  font-size: 14px;
+  font-size: 13px;
   outline: 0;
   display: flex;
   align-items: center;
   transition: 0.2s;
+}
+.menu_item_hr {
+  border-bottom: 1px solid #ebeef5;
 }
 .menu_item i {
   margin-right: 5px;
@@ -213,6 +218,7 @@ export default {
   margin-left: 16px;
   font-size: 6px;
   color: #909399;
+  width: 10px;
 }
 .menu_item_available {
   color: #606266;
