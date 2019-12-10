@@ -55,7 +55,6 @@
 
 <script>
 import Vue from "vue";
-import { hasClass } from "../util";
 import {
   WINDOW_EDGE_MARGIN,
   SUBMENU_X_OFFSET,
@@ -137,11 +136,7 @@ export default {
       if (!item.children) {
         return;
       }
-      let el = e.target;
-      while (!hasClass(el, this.$style.common_menu_item) && el.parentElement) {
-        el = el.parentElement;
-      }
-      const menuItemClientRect = el.getBoundingClientRect();
+      const menuItemClientRect = e.target.getBoundingClientRect();
       const SubmenuConstructor = Vue.component(COMPONENT_NAME);
       this.activeSubmenu.index = index;
       this.activeSubmenu.instance = new SubmenuConstructor();

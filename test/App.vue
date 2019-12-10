@@ -28,6 +28,30 @@ export default {
             }
           },
           {
+            label: "查看22",
+            children: [
+              {
+                label: "复制2",
+                children: [
+                  {
+                    label: "复制3",
+                    onClick: () => {
+                      this.message = "点击复制3";
+                    }
+                  },
+                  {
+                    label: "粘贴3",
+                    // icon: "paste",
+                    disabled: true,
+                    onClick: () => {
+                      this.message = "点击粘贴3";
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
             label: "查看",
             children: [
               {
