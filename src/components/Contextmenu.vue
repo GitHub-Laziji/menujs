@@ -3,16 +3,18 @@
 </template>
 
 <script>
+import Vue from "vue";
 import { getElementsByClassName, uuid } from "../util";
 import { COMPONENT_NAME } from "../constant";
 export default {
   data() {
+    const randomKey = uuid();
     return {
       commonClass: {
-        menu: "menu" + uuid(),
-        menuItem: "menuItem" + uuid(),
-        clickableMenuItem: "clickableMenuItem" + uuid(),
-        notClickableMenuItem: "notClickableMenuItem" + uuid()
+        menu: "menu" + randomKey,
+        menuItem: "menuItem" + randomKey,
+        clickableMenuItem: "clickableMenuItem" + randomKey,
+        notClickableMenuItem: "notClickableMenuItem" + randomKey
       },
       items: [],
       position: {
@@ -29,7 +31,7 @@ export default {
     };
   },
   mounted() {
-    const SubmenuConstructor = this.$vue().component(COMPONENT_NAME);
+    const SubmenuConstructor = Vue.component(COMPONENT_NAME);
     this.mainMenuInstance = new SubmenuConstructor();
     this.mainMenuInstance.items = this.items;
     this.mainMenuInstance.commonClass = this.commonClass;

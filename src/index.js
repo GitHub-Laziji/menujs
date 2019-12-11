@@ -1,13 +1,14 @@
 
-import Contextmenu from "./components/Contextmenu"
-import Submenu from "./components/Submenu"
+import Vue from 'vue';
+import Contextmenu from "./components/Contextmenu";
+import Submenu from "./components/Submenu";
 import { COMPONENT_NAME } from "./constant";
+
+const ContextmenuConstructor = Vue.extend(Contextmenu);
+Vue.component(COMPONENT_NAME, Submenu);
 
 export default {
   install(Vue) {
-    Vue.prototype.$vue = () => Vue;
-    Vue.component(COMPONENT_NAME, Submenu);
-    const ContextmenuConstructor = Vue.extend(Contextmenu);
     Vue.prototype.$contextmenu = (options) => {
       let instance = new ContextmenuConstructor();
       instance.items = options.items;
@@ -17,7 +18,6 @@ export default {
         instance.position.x = options.event.clientX;
         instance.position.y = options.event.clientY;
       }
-
       instance.customClass = options.customClass;
       options.minWidth && (instance.style.minWidth = options.minWidth);
       options.zIndex && (instance.style.zIndex = options.zIndex);
