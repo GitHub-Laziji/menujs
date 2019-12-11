@@ -1,4 +1,4 @@
-# menujs
+# vue-contextmenujs
 
 
 Vue 原生实现右键菜单组件, 零依赖
