@@ -4,18 +4,11 @@
 
 <script>
 import Vue from "vue";
-import { getElementsByClassName, uuid } from "../util";
+import { getElementsByClassName } from "../util";
 import { COMPONENT_NAME } from "../constant";
 export default {
   data() {
-    const randomKey = uuid();
     return {
-      commonClass: {
-        menu: "menu" + randomKey,
-        menuItem: "menuItem" + randomKey,
-        clickableMenuItem: "clickableMenuItem" + randomKey,
-        notClickableMenuItem: "notClickableMenuItem" + randomKey
-      },
       items: [],
       position: {
         x: 0,
@@ -34,7 +27,12 @@ export default {
     const SubmenuConstructor = Vue.component(COMPONENT_NAME);
     this.mainMenuInstance = new SubmenuConstructor();
     this.mainMenuInstance.items = this.items;
-    this.mainMenuInstance.commonClass = this.commonClass;
+    this.mainMenuInstance.commonClass = {
+      menu: this.$style.menu,
+      menuItem: this.$style.menu_item,
+      clickableMenuItem: this.$style.menu_item__clickable,
+      unclickableMenuItem: this.$style.menu_item__unclickable
+    };
     this.mainMenuInstance.position = {
       x: this.position.x,
       y: this.position.y,
@@ -60,7 +58,7 @@ export default {
     },
     mouseDownListener(e) {
       let el = e.target;
-      const menus = getElementsByClassName(this.commonClass.menu);
+      const menus = getElementsByClassName(this.$style.menu);
       while (!menus.find(m => m === el) && el.parentElement) {
         el = el.parentElement;
       }
@@ -70,10 +68,10 @@ export default {
     },
     mouseUpListener(e) {
       let el = e.target;
-      const menus = getElementsByClassName(this.commonClass.menu);
-      const menuItems = getElementsByClassName(this.commonClass.menuItem);
-      const notClickableMenuItems = getElementsByClassName(
-        this.commonClass.notClickableMenuItem
+      const menus = getElementsByClassName(this.$style.menu);
+      const menuItems = getElementsByClassName(this.$style.menu_item);
+      const unclickableMenuItems = getElementsByClassName(
+        this.$style.menu_item__unclickable
       );
       while (
         !menus.find(m => m === el) &&
@@ -83,7 +81,7 @@ export default {
         el = el.parentElement;
       }
       if (menuItems.find(m => m === el)) {
-        if (e.button !== 0 || notClickableMenuItems.find(m => m === el)) {
+        if (e.button !== 0 || unclickableMenuItems.find(m => m === el)) {
           return;
         }
         this.$destroy();
@@ -112,3 +110,11 @@ export default {
   }
 };
 </script>
+
+<style module>
+.menu,
+.menu_item,
+.menu_item__clickable,
+.menu_item__unclickable {
+}
+</style>

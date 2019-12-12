@@ -11,8 +11,8 @@
           <template v-if="!item.hidden">
             <div
               :class="[
-                commonClass.menuItem, commonClass.notClickableMenuItem, 
-                $style.menu_item, $style.menu_item_disabled
+                commonClass.menuItem, commonClass.unclickableMenuItem, 
+                $style.menu_item, $style.menu_item__disabled
               ]"
               :key="index"
               v-if="item.disabled"
@@ -23,8 +23,8 @@
             </div>
             <div
               :class="[
-                commonClass.menuItem, commonClass.notClickableMenuItem, 
-                $style.menu_item, $style.menu_item_available,
+                commonClass.menuItem, commonClass.unclickableMenuItem, 
+                $style.menu_item, $style.menu_item__available,
                 activeSubmenu.index===index? $style.menu_item_expand:null
               ]"
               :key="index"
@@ -38,7 +38,7 @@
             <div
               :class="[
                 commonClass.menuItem, commonClass.clickableMenuItem, 
-                $style.menu_item, $style.menu_item_available
+                $style.menu_item, $style.menu_item__available
               ]"
               :key="index"
               @mouseenter="($event)=>enterItem($event,item,index)"
@@ -73,7 +73,7 @@ export default {
         menu: null,
         menuItem: null,
         clickableMenuItem: null,
-        notClickableMenuItem: null
+        unclickableMenuItem: null
       },
       activeSubmenu: {
         index: null,
@@ -155,7 +155,10 @@ export default {
       this.activeSubmenu.instance.style.minWidth =
         typeof item.minWidth === "number" ? item.minWidth : this.style.minWidth;
       this.activeSubmenu.instance.style.zIndex = this.style.zIndex;
-      this.activeSubmenu.instance.customClass = this.customClass;
+      this.activeSubmenu.instance.customClass =
+        typeof item.customClass === "string"
+          ? item.customClass
+          : this.customClass;
       this.activeSubmenu.instance.$mount();
       document.body.appendChild(this.activeSubmenu.instance.$el);
     },
@@ -168,7 +171,6 @@ export default {
       ) {
         return item.onClick();
       }
-      return true;
     },
     close() {
       this.visible = false;
@@ -220,18 +222,18 @@ export default {
   color: #909399;
   width: 10px;
 }
-.menu_item_available {
+.menu_item__available {
   color: #606266;
   cursor: pointer;
 }
-.menu_item_available:hover {
+.menu_item__available:hover {
   background: #ecf5ff;
   color: #409eff;
 }
-.menu_item_available:hover .menu_item_expand_icon {
+.menu_item__available:hover .menu_item_expand_icon {
   color: #7cbcfc;
 }
-.menu_item_disabled {
+.menu_item__disabled {
   color: #c0c4cc;
   cursor: not-allowed;
 }

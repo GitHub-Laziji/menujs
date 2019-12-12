@@ -13,7 +13,7 @@ export default {
     document.querySelector("#app").oncontextmenu = event => {
       this.$contextmenu({
         items: [
-          { label: "返回(B)" },
+          { label: "返回(B)", onClick: () => (this.message = "返回(B)") },
           { label: "前进(F)", disabled: true },
           { label: "重新加载(R)", divided: true },
           { label: "另存为(A)..." },
