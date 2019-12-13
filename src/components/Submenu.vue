@@ -17,7 +17,9 @@
               :key="index"
               v-if="item.disabled"
             >
-              <i :class="item.icon" v-if="item.icon"></i>
+              <div :class="$style.menu_item_icon" v-if="hasIcon">
+                <i :class="item.icon" v-if="item.icon"></i>
+              </div>
               <span :class="$style.menu_item_label">{{item.label}}</span>
               <div :class="$style.menu_item_expand_icon"></div>
             </div>
@@ -31,7 +33,9 @@
               @mouseenter="($event)=>enterItem($event,item,index)"
               v-else-if="item.children"
             >
-              <i :class="item.icon" v-if="item.icon"></i>
+              <div :class="$style.menu_item_icon" v-if="hasIcon">
+                <i :class="item.icon" v-if="item.icon"></i>
+              </div>
               <span :class="$style.menu_item_label">{{item.label}}</span>
               <div :class="$style.menu_item_expand_icon">▶</div>
             </div>
@@ -45,7 +49,9 @@
               @click="itemClick(item)"
               v-else
             >
-              <i :class="item.icon" v-if="item.icon"></i>
+              <div :class="$style.menu_item_icon" v-if="hasIcon">
+                <i :class="item.icon" v-if="item.icon"></i>
+              </div>
               <span :class="$style.menu_item_label">{{item.label}}</span>
               <div :class="$style.menu_item_expand_icon"></div>
             </div>
@@ -93,11 +99,18 @@ export default {
         minWidth: 150
       },
       customClass: null,
-      visible: false
+      visible: false,
+      hasIcon: false
     };
   },
   mounted() {
     this.visible = true;
+    for (let item of this.items) {
+      if (item.icon) {
+        this.hasIcon = true;
+        break;
+      }
+    }
     this.$nextTick(() => {
       const windowWidth = document.documentElement.clientWidth;
       const windowHeight = document.documentElement.clientHeight;
@@ -110,7 +123,11 @@ export default {
         this.position.x + this.position.width + menuWidth + WINDOW_EDGE_MARGIN >
         windowWidth
       ) {
-        this.style.left = this.position.x - menuWidth;
+        if (this.position.width === 0) {
+          this.style.left = windowWidth - menuWidth;
+        } else {
+          this.style.left = this.position.x - menuWidth;
+        }
       }
 
       this.style.top = this.position.y;
@@ -194,7 +211,7 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
   background: #fff;
   border-radius: 4px;
-  padding: 10px 0;
+  padding: 8px 0;
 }
 .menu_body {
   display: block;
@@ -202,7 +219,7 @@ export default {
 .menu_item {
   list-style: none;
   line-height: 32px;
-  padding: 0 20px;
+  padding: 0 16px;
   margin: 0;
   font-size: 13px;
   outline: 0;
@@ -213,8 +230,9 @@ export default {
 .menu_item_hr {
   border-bottom: 1px solid #ebeef5;
 }
-.menu_item i {
-  margin-right: 5px;
+.menu_item .menu_item_icon {
+  margin-right: 8px;
+  width: 13px;
 }
 .menu_item .menu_item_label {
   flex: 1;

@@ -21,9 +21,9 @@ export default {
             }
           },
           { label: "前进(F)", disabled: true },
-          { label: "重新加载(R)", divided: true },
+          { label: "重新加载(R)", divided: true, icon: "el-icon-refresh" },
           { label: "另存为(A)..." },
-          { label: "打印(P)..." },
+          { label: "打印(P)...", icon: "el-icon-printer" },
           { label: "投射(C)...", divided: true },
           {
             label: "使用网页翻译(T)",
@@ -45,7 +45,7 @@ export default {
               { label: "截取全屏" }
             ]
           },
-          { label: "查看网页源代码(V)" },
+          { label: "查看网页源代码(V)", icon: "el-icon-view" },
           { label: "检查(N)" }
         ],
         event,
