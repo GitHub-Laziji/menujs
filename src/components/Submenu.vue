@@ -66,7 +66,6 @@
 <script>
 import Vue from "vue";
 import {
-  WINDOW_EDGE_MARGIN,
   SUBMENU_X_OFFSET,
   SUBMENU_Y_OFFSET,
   COMPONENT_NAME
@@ -119,10 +118,7 @@ export default {
       const menuHeight = menu.offsetHeight;
 
       this.style.left = this.position.x + this.position.width;
-      if (
-        this.position.x + this.position.width + menuWidth + WINDOW_EDGE_MARGIN >
-        windowWidth
-      ) {
+      if (this.position.x + this.position.width + menuWidth > windowWidth) {
         if (this.position.width === 0) {
           this.style.left = windowWidth - menuWidth;
         } else {
@@ -131,7 +127,7 @@ export default {
       }
 
       this.style.top = this.position.y;
-      if (this.position.y + menuHeight + WINDOW_EDGE_MARGIN > windowHeight) {
+      if (this.position.y + menuHeight > windowHeight) {
         if (this.position.height === 0) {
           this.style.top = this.position.y - menuHeight;
         } else {
