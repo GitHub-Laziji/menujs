@@ -163,6 +163,9 @@ export default {
       document.body.appendChild(this.activeSubmenu.instance.$el);
     },
     itemClick(item) {
+      if (!this.visible) {
+        return;
+      }
       if (
         item &&
         !item.disabled &&

@@ -66,7 +66,7 @@ export default {
         this.$destroy();
       }
     },
-    mouseUpListener(e) {
+    mouseClickListener(e) {
       let el = e.target;
       const menus = getElementsByClassName(this.$style.menu);
       const menuItems = getElementsByClassName(this.$style.menu_item);
@@ -93,7 +93,7 @@ export default {
     },
     addListener() {
       if (!this.mouseListening) {
-        document.addEventListener("mouseup", this.mouseUpListener);
+        document.addEventListener("click", this.mouseClickListener);
         document.addEventListener("mousedown", this.mouseDownListener);
         document.addEventListener("mousewheel", this.mousewheelListener);
         this.mouseListening = true;
@@ -101,7 +101,7 @@ export default {
     },
     removeListener() {
       if (this.mouseListening) {
-        document.removeEventListener("mouseup", this.mouseListener);
+        document.removeEventListener("click", this.mouseClickListener);
         document.removeEventListener("mousedown", this.mouseDownListener);
         document.removeEventListener("mousewheel", this.mousewheelListener);
         this.mouseListening = false;

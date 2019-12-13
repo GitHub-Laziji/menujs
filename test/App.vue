@@ -13,7 +13,13 @@ export default {
     document.querySelector("#app").oncontextmenu = event => {
       this.$contextmenu({
         items: [
-          { label: "返回(B)", onClick: () => (this.message = "返回(B)") },
+          {
+            label: "返回(B)",
+            onClick: () => {
+              this.message = "返回(B)";
+              console.log("返回(B)");
+            }
+          },
           { label: "前进(F)", disabled: true },
           { label: "重新加载(R)", divided: true },
           { label: "另存为(A)..." },
@@ -31,7 +37,10 @@ export default {
             children: [
               {
                 label: "截取可视化区域",
-                onClick: () => (this.message = "截取可视化区域")
+                onClick: () => {
+                  this.message = "截取可视化区域";
+                  console.log("截取可视化区域");
+                }
               },
               { label: "截取全屏" }
             ]
