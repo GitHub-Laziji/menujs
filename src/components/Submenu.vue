@@ -68,6 +68,8 @@ import Vue from "vue";
 import {
   SUBMENU_X_OFFSET,
   SUBMENU_Y_OFFSET,
+  SUBMENU_OPEN_TREND_LEFT,
+  SUBMENU_OPEN_TREND_RIGHT,
   COMPONENT_NAME
 } from "../constant";
 export default {
@@ -99,7 +101,8 @@ export default {
       },
       customClass: null,
       visible: false,
-      hasIcon: false
+      hasIcon: false,
+      openTrend: SUBMENU_OPEN_TREND_RIGHT
     };
   },
   mounted() {
@@ -117,14 +120,9 @@ export default {
       const menuWidth = menu.offsetWidth;
       const menuHeight = menu.offsetHeight;
 
-      this.style.left = this.position.x + this.position.width;
-      if (this.position.x + this.position.width + menuWidth > windowWidth) {
-        if (this.position.width === 0) {
-          this.style.left = windowWidth - menuWidth;
-        } else {
-          this.style.left = this.position.x - menuWidth;
-        }
-      }
+      (this.openTrend === SUBMENU_OPEN_TREND_LEFT
+        ? this.leftOpen
+        : this.rightOpen)(windowWidth, windowHeight, menuWidth);
 
       this.style.top = this.position.y;
       if (this.position.y + menuHeight > windowHeight) {
@@ -137,6 +135,30 @@ export default {
     });
   },
   methods: {
+    leftOpen(windowWidth, windowHeight, menuWidth) {
+      this.style.left = this.position.x - menuWidth;
+      this.openTrend = SUBMENU_OPEN_TREND_LEFT;
+      if (this.style.left < 0) {
+        this.openTrend = SUBMENU_OPEN_TREND_RIGHT;
+        if (this.position.width === 0) {
+          this.style.left = 0;
+        } else {
+          this.style.left = this.position.x + this.position.width;
+        }
+      }
+    },
+    rightOpen(windowWidth, windowHeight, menuWidth) {
+      this.style.left = this.position.x + this.position.width;
+      this.openTrend = SUBMENU_OPEN_TREND_RIGHT;
+      if (this.style.left + menuWidth > windowWidth) {
+        this.openTrend = SUBMENU_OPEN_TREND_LEFT;
+        if (this.position.width === 0) {
+          this.style.left = windowWidth - menuWidth;
+        } else {
+          this.style.left = this.position.x - menuWidth;
+        }
+      }
+    },
     enterItem(e, item, index) {
       if (!this.visible) {
         return;
@@ -158,6 +180,7 @@ export default {
       this.activeSubmenu.index = index;
       this.activeSubmenu.instance = new SubmenuConstructor();
       this.activeSubmenu.instance.items = item.children;
+      this.activeSubmenu.instance.openTrend = this.openTrend;
       this.activeSubmenu.instance.commonClass = this.commonClass;
       this.activeSubmenu.instance.position = {
         x: menuItemClientRect.x + SUBMENU_X_OFFSET,
