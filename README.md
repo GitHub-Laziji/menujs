@@ -67,6 +67,8 @@ export default {
           { label: "检查(N)" }
         ],
         event,
+        //x: event.clientX,
+        //y: event.clientY,
         customClass: "class-a",
         zIndex: 3,
         minWidth: 230
