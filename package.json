@@ -2,6 +2,11 @@
   "name": "vue-contextmenujs",
   "version": "1.2.2",
   "description": "Vue contextmenu",
+  "keywords": [
+    "Vue",
+    "Contextmenu",
+    "右键菜单"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "vue serve ./test/main.js "
