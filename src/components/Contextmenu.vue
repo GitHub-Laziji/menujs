@@ -116,5 +116,6 @@ export default {
 .menu_item,
 .menu_item__clickable,
 .menu_item__unclickable {
+  box-sizing: border-box;
 }
 </style>

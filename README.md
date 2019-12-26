@@ -17,7 +17,6 @@ npm install vue-contextmenujs
 
 ## CDN
 ```html
-<link href="https://unpkg.com/vue-contextmenujs/dist/contextmenu.css" rel="stylesheet">
 <script src="https://unpkg.com/vue-contextmenujs/dist/contextmenu.umd.js">
 ```
 
