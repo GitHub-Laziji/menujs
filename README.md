@@ -1,4 +1,8 @@
-# vue-contextmenujs
+# Vue Contextmenu
+
+![](https://img.shields.io/github/languages/top/github-laziji/menujs.svg?style=flat)
+![](https://img.shields.io/github/stars/gitHub-laziji/menujs.svg?style=social)
+
 
 
 Vue 原生实现右键菜单组件, 零依赖
@@ -17,6 +21,10 @@ Vue 原生实现右键菜单组件, 零依赖
 ```
 npm install vue-contextmenujs
 ```
+或
+```
+yarn add vue-contextmenujs
+```
 
 ## CDN
 ```html
@@ -25,7 +33,7 @@ npm install vue-contextmenujs
 
 
 # 使用
-
+CDN引入则不需要 `Vue.use(Contextmenu)`
 > 测试中使用的是`element-ui`图标
 ```js
 import Contextmenu from "vue-contextmenujs"
