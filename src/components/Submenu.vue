@@ -12,7 +12,8 @@
             <div
               :class="[
                 commonClass.menuItem, commonClass.unclickableMenuItem, 
-                $style.menu_item, $style.menu_item__disabled
+                $style.menu_item, $style.menu_item__disabled,
+                item.divided?$style.menu_item__divided:null
               ]"
               :key="index"
               v-if="item.disabled"
@@ -27,7 +28,8 @@
               :class="[
                 commonClass.menuItem, commonClass.unclickableMenuItem, 
                 $style.menu_item, $style.menu_item__available,
-                activeSubmenu.index===index? $style.menu_item_expand:null
+                activeSubmenu.index===index? $style.menu_item_expand:null,
+                item.divided?$style.menu_item__divided:null
               ]"
               :key="index"
               @mouseenter="($event)=>enterItem($event,item,index)"
@@ -42,7 +44,8 @@
             <div
               :class="[
                 commonClass.menuItem, commonClass.clickableMenuItem, 
-                $style.menu_item, $style.menu_item__available
+                $style.menu_item, $style.menu_item__available,
+                item.divided?$style.menu_item__divided:null
               ]"
               :key="index"
               @mouseenter="($event)=>enterItem($event,item,index)"
@@ -55,7 +58,6 @@
               <span :class="$style.menu_item_label">{{item.label}}</span>
               <div :class="$style.menu_item_expand_icon"></div>
             </div>
-            <div :key="`${index}-br`" :class="$style.menu_item_hr" v-if="item.divided"></div>
           </template>
         </template>
       </div>
@@ -245,9 +247,10 @@ export default {
   display: flex;
   align-items: center;
   transition: 0.2s;
+  border-bottom: 1px solid #00000000;
 }
-.menu_item_hr {
-  border-bottom: 1px solid #ebeef5;
+.menu_item__divided {
+  border-bottom-color: #ebeef5;
 }
 .menu_item .menu_item_icon {
   margin-right: 8px;
