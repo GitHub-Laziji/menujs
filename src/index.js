@@ -8,7 +8,8 @@ const ContextmenuConstructor = Vue.extend(Contextmenu);
 Vue.component(COMPONENT_NAME, Submenu);
 
 function install(Vue) {
-  Vue.prototype.$contextmenu = (options) => {
+  let lastInstance = null;
+  const ContextmenuProxy = function (options) {
     let instance = new ContextmenuConstructor();
     instance.items = options.items;
     instance.position.x = options.x || 0;
@@ -20,8 +21,17 @@ function install(Vue) {
     instance.customClass = options.customClass;
     options.minWidth && (instance.style.minWidth = options.minWidth);
     options.zIndex && (instance.style.zIndex = options.zIndex);
+    ContextmenuProxy.destroy();
+    lastInstance = instance;
     instance.$mount();
   }
+  ContextmenuProxy.destroy = function () {
+    if (lastInstance) {
+      lastInstance.$destroy();
+      lastInstance = null;
+    }
+  }
+  Vue.prototype.$contextmenu = ContextmenuProxy;
 }
 
 if (window && window.Vue) {
