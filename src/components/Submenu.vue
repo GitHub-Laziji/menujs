@@ -5,6 +5,7 @@
       :class="[commonClass.menu, $style.menu, customClass]"
       :style="{left: style.left + 'px', top: style.top + 'px', minWidth: style.minWidth + 'px', zIndex: style.zIndex}"
       v-if="visible"
+      @contextmenu="(e)=>e.preventDefault()"
     >
       <div :class="$style.menu_body">
         <template v-for="(item,index) of items">
