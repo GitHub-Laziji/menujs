@@ -2,62 +2,62 @@
   <transition name="contextmenu-submenu-fade">
     <div
       ref="menu"
-      :class="[commonClass.menu, $style.menu, customClass]"
+      :class="[commonClass.menu, 'menu', customClass]"
       :style="{left: style.left + 'px', top: style.top + 'px', minWidth: style.minWidth + 'px', zIndex: style.zIndex}"
       v-if="visible"
       @contextmenu="(e)=>e.preventDefault()"
     >
-      <div :class="$style.menu_body">
+      <div class="menu_body">
         <template v-for="(item,index) of items">
           <template v-if="!item.hidden">
             <div
               :class="[
                 commonClass.menuItem, commonClass.unclickableMenuItem, 
-                $style.menu_item, $style.menu_item__disabled,
-                item.divided?$style.menu_item__divided:null
+                'menu_item', 'menu_item__disabled',
+                item.divided?'menu_item__divided':null
               ]"
               :key="index"
               v-if="item.disabled"
             >
-              <div :class="$style.menu_item_icon" v-if="hasIcon">
+              <div class="menu_item_icon" v-if="hasIcon">
                 <i :class="item.icon" v-if="item.icon"></i>
               </div>
-              <span :class="$style.menu_item_label">{{item.label}}</span>
-              <div :class="$style.menu_item_expand_icon"></div>
+              <span class="menu_item_label">{{item.label}}</span>
+              <div class="menu_item_expand_icon"></div>
             </div>
             <div
               :class="[
                 commonClass.menuItem, commonClass.unclickableMenuItem, 
-                $style.menu_item, $style.menu_item__available,
-                activeSubmenu.index===index? $style.menu_item_expand:null,
-                item.divided?$style.menu_item__divided:null
+                'menu_item', 'menu_item__available',
+                activeSubmenu.index===index? 'menu_item_expand':null,
+                item.divided?'menu_item__divided':null
               ]"
               :key="index"
               @mouseenter="($event)=>enterItem($event,item,index)"
               v-else-if="item.children"
             >
-              <div :class="$style.menu_item_icon" v-if="hasIcon">
+              <div class="menu_item_icon" v-if="hasIcon">
                 <i :class="item.icon" v-if="item.icon"></i>
               </div>
-              <span :class="$style.menu_item_label">{{item.label}}</span>
-              <div :class="$style.menu_item_expand_icon">▶</div>
+              <span class="menu_item_label">{{item.label}}</span>
+              <div class="menu_item_expand_icon">▶</div>
             </div>
             <div
               :class="[
                 commonClass.menuItem, commonClass.clickableMenuItem, 
-                $style.menu_item, $style.menu_item__available,
-                item.divided?$style.menu_item__divided:null
+                'menu_item', 'menu_item__available',
+                item.divided?'menu_item__divided':null
               ]"
               :key="index"
               @mouseenter="($event)=>enterItem($event,item,index)"
               @click="itemClick(item)"
               v-else
             >
-              <div :class="$style.menu_item_icon" v-if="hasIcon">
+              <div class="menu_item_icon" v-if="hasIcon">
                 <i :class="item.icon" v-if="item.icon"></i>
               </div>
-              <span :class="$style.menu_item_label">{{item.label}}</span>
-              <div :class="$style.menu_item_expand_icon"></div>
+              <span class="menu_item_label">{{item.label}}</span>
+              <div class="menu_item_expand_icon"></div>
             </div>
           </template>
         </template>
@@ -227,7 +227,7 @@ export default {
 };
 </script>
 
-<style module>
+<style scoped>
 .menu {
   position: fixed;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
@@ -263,7 +263,6 @@ export default {
 .menu_item .menu_item_expand_icon {
   margin-left: 16px;
   font-size: 6px;
-  color: #909399;
   width: 10px;
 }
 .menu_item__available {
@@ -274,9 +273,6 @@ export default {
   background: #ecf5ff;
   color: #409eff;
 }
-.menu_item__available:hover .menu_item_expand_icon {
-  color: #7cbcfc;
-}
 .menu_item__disabled {
   color: #c0c4cc;
   cursor: not-allowed;
@@ -284,9 +280,6 @@ export default {
 .menu_item_expand {
   background: #ecf5ff;
   color: #409eff;
-}
-.menu_item_expand .menu_item_expand_icon {
-  color: #7cbcfc;
 }
 </style>
 
