@@ -42,7 +42,7 @@ Vue.use(Contextmenu);
 
 // 在组件中调用显示菜单
 // this.$contextmenu(options:MenuOptions);
-// 鼠标点击或滚轮自动  也可手动销毁
+// 鼠标点击或滚轮自动销毁, 也可手动销毁
 // this.$contextmenu.destroy();
 ```
 
