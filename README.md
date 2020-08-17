@@ -38,6 +38,12 @@ CDN引入则不需要 `Vue.use(Contextmenu)`
 ```js
 import Contextmenu from "vue-contextmenujs"
 Vue.use(Contextmenu);
+
+
+// 在组件中调用显示菜单
+// this.$contextmenu(options:MenuOptions);
+// 鼠标点击或滚轮自动  也可手动销毁
+// this.$contextmenu.destroy();
 ```
 
 
@@ -104,11 +110,11 @@ export default {
 
 # 参数说明
 
-## Menu
+## MenuOptions
 
 | 属性 | 描述 | 类型 | 可选值 | 默认值 |
 | :----: | :----: | :----: | :----: | :----: |
-| items | 菜单结构信息 | `MenuItem[]` | — | — |
+| items | 菜单结构信息 | `MenuItemOptions[]` | — | — |
 | event | 鼠标事件信息 | `Event` | — | — |
 | x | 菜单显示X坐标, 存在`event`则失效 | `number` | — | `0` |
 | y | 菜单显示Y坐标, 存在`event`则失效 | `number` | — | `0` |
@@ -116,7 +122,7 @@ export default {
 | customClass | 自定义菜单class | `string` | — | — |
 | minWidth | 主菜单最小宽度 | `number` | — | `150` |
 
-## MenuItem
+## MenuItemOptions
 
 | 属性 | 描述 | 类型 | 可选值 | 默认值 |
 | :----: | :----: | :----: | :----: | :----: |
@@ -127,4 +133,4 @@ export default {
 | customClass | 自定义子菜单class | `string` | — | — |
 | minWidth | 子菜单最小宽度 | `number` | — | `150` |
 | onClick | 菜单项点击事件 | `Function()` | — | — |
-| children | 子菜单结构信息 | `MenuItem[]` | — | — |
+| children | 子菜单结构信息 | `MenuItemOptions[]` | — | — |
