@@ -44,6 +44,9 @@ Vue.use(Contextmenu);
 // this.$contextmenu(options:MenuOptions);
 // 鼠标点击或滚轮自动销毁, 也可手动销毁
 // this.$contextmenu.destroy();
+
+// 去除浏览器默认菜单
+// event.preventDefault();
 ```
 
 
