@@ -99,7 +99,7 @@ export default {
         event,
         //x: event.clientX,
         //y: event.clientY,
-        customClass: "class-a",
+        customClass: "custom-class",
         zIndex: 3,
         minWidth: 230
       });
@@ -108,6 +108,14 @@ export default {
   }
 };
 </script>
+```
+
+# 自定义样式
+```css
+.custom-class .menu_item__available:hover {
+  background: #ffecf2 !important;
+  color: #ff4050 !important;
+}
 ```
 
 
