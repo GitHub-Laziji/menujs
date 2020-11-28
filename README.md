@@ -112,9 +112,39 @@ export default {
 
 # 自定义样式
 ```css
-.custom-class .menu_item__available:hover {
+/* custom */
+.custom-class .menu_item__available:hover,
+.custom-class .menu_item_expand {
   background: #ffecf2 !important;
   color: #ff4050 !important;
+}
+
+/* antd */
+.antd-theme.menu {
+  border-radius: 2px !important;
+}
+.antd-theme .menu_item {
+  color: #000000d9 !important;
+}
+.antd-theme .menu_item__available:hover {
+  background: #f5f5f5 !important;
+}
+.antd-theme .menu_item_expand {
+  font-weight: 600 !important;
+  background-color: #e6f7ff !important;
+}
+
+/* material */
+.material-theme.menu {
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12) !important;
+}
+.material-theme .menu_item {
+  color: #000000de !important;
+}
+.material-theme .menu_item__available:hover,
+.material-theme .menu_item_expand {
+  background: rgba(0, 0, 0, 0.04) !important;
 }
 ```
 
