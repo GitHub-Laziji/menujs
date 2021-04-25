@@ -982,6 +982,9 @@ var Submenuvue_type_template_id_57402592_scoped_true_staticRenderFns = []
         } else {
           this.style.top = windowHeight - menuHeight;
         }
+        if(this.style.top < 0){
+          this.style.top = 0
+        }
       }
     });
   },
