@@ -91,6 +91,7 @@ export default {
     };
   },
   mounted() {
+    console.log(this.position)
     this.visible = true;
     for (let item of this.items) {
       if (item.icon) {
@@ -112,7 +113,7 @@ export default {
       this.style.top = this.position.y;
       if (this.position.y + menuHeight > windowHeight) {
         if (this.position.height === 0) {
-          this.style.top = this.position.y - menuHeight;
+          this.style.top = this.position.y / windowHeight > 0.5 ? (this.position.y - menuHeight) : this.position.y;
         } else {
           this.style.top = windowHeight - menuHeight;
         }
@@ -171,7 +172,7 @@ export default {
         x: menuItemClientRect.x + SUBMENU_X_OFFSET,
         y: menuItemClientRect.y + SUBMENU_Y_OFFSET,
         width: menuItemClientRect.width - 2 * SUBMENU_X_OFFSET,
-        height: menuItemClientRect.width
+        height: menuItemClientRect.height - 2 * SUBMENU_Y_OFFSET
       };
       this.activeSubmenu.instance.style.minWidth =
         typeof item.minWidth === "number" ? item.minWidth : this.style.minWidth;
