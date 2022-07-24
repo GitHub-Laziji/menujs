@@ -46,15 +46,9 @@ export default {
     document.body.appendChild(this.mainMenuInstance.$el);
     this.addListener();
   },
-  destroyed() {
-    this.removeListener();
-    if (this.mainMenuInstance) {
-      this.mainMenuInstance.close();
-    }
-  },
   methods: {
     mousewheelListener() {
-      this.$destroy();
+      this.close();
     },
     mouseDownListener(e) {
       let el = e.target;
@@ -63,7 +57,7 @@ export default {
         el = el.parentElement;
       }
       if (!menus.find(m => m === el)) {
-        this.$destroy();
+        this.close();
       }
     },
     mouseClickListener(e) {
@@ -84,11 +78,11 @@ export default {
         if (e.button !== 0 || unclickableMenuItems.find(m => m === el)) {
           return;
         }
-        this.$destroy();
+        this.close();
         return;
       }
       if (!menus.find(m => m === el)) {
-        this.$destroy();
+        this.close();
       }
     },
     addListener() {
@@ -106,6 +100,15 @@ export default {
         document.removeEventListener("mousewheel", this.mousewheelListener);
         this.mouseListening = false;
       }
+    },
+    close() {
+      this.removeListener();
+      if (this.mainMenuInstance) {
+        this.mainMenuInstance.close();
+      }
+      this.$nextTick(() => {
+        this.$destroy();
+      });
     }
   }
 };

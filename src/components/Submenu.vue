@@ -1,62 +1,44 @@
 <template>
   <transition name="contextmenu-submenu-fade">
-    <div
-      ref="menu"
-      :class="[commonClass.menu, 'menu', customClass]"
-      :style="{left: style.left + 'px', top: style.top + 'px', minWidth: style.minWidth + 'px', zIndex: style.zIndex}"
-      v-if="visible"
-      @contextmenu="(e)=>e.preventDefault()"
-    >
+    <div ref="menu" :class="[commonClass.menu, 'menu', customClass]"
+      :style="{ left: style.left + 'px', top: style.top + 'px', minWidth: style.minWidth + 'px', zIndex: style.zIndex }"
+      v-if="visible" @contextmenu="(e) => e.preventDefault()">
       <div class="menu_body">
-        <template v-for="(item,index) of items">
+        <template v-for="(item, index) of items">
           <template v-if="!item.hidden">
-            <div
-              :class="[
-                commonClass.menuItem, commonClass.unclickableMenuItem, 
-                'menu_item', 'menu_item__disabled',
-                item.divided?'menu_item__divided':null
-              ]"
-              :key="index"
-              v-if="item.disabled"
-            >
+            <div :class="[
+              commonClass.menuItem, commonClass.unclickableMenuItem,
+              'menu_item', 'menu_item__disabled',
+              item.divided ? 'menu_item__divided' : null
+            ]" :key="index + '_disabled'" v-if="item.disabled">
               <div class="menu_item_icon" v-if="hasIcon">
                 <i :class="item.icon" v-if="item.icon"></i>
               </div>
-              <span class="menu_item_label">{{item.label}}</span>
+              <span class="menu_item_label">{{ item.label }}</span>
               <div class="menu_item_expand_icon"></div>
             </div>
-            <div
-              :class="[
-                commonClass.menuItem, commonClass.unclickableMenuItem, 
-                'menu_item', 'menu_item__available',
-                activeSubmenu.index===index? 'menu_item_expand':null,
-                item.divided?'menu_item__divided':null
-              ]"
-              :key="index"
-              @mouseenter="($event)=>enterItem($event,item,index)"
-              v-else-if="item.children"
-            >
+            <div :class="[
+              commonClass.menuItem, commonClass.unclickableMenuItem,
+              'menu_item', 'menu_item__available',
+              activeSubmenu.index === index ? 'menu_item_expand' : null,
+              item.divided ? 'menu_item__divided' : null
+            ]" :key="index + '_children'" @mouseenter="($event) => enterItem($event, item, index)"
+              v-else-if="item.children">
               <div class="menu_item_icon" v-if="hasIcon">
                 <i :class="item.icon" v-if="item.icon"></i>
               </div>
-              <span class="menu_item_label">{{item.label}}</span>
+              <span class="menu_item_label">{{ item.label }}</span>
               <div class="menu_item_expand_icon">▶</div>
             </div>
-            <div
-              :class="[
-                commonClass.menuItem, commonClass.clickableMenuItem, 
-                'menu_item', 'menu_item__available',
-                item.divided?'menu_item__divided':null
-              ]"
-              :key="index"
-              @mouseenter="($event)=>enterItem($event,item,index)"
-              @click="itemClick(item)"
-              v-else
-            >
+            <div :class="[
+              commonClass.menuItem, commonClass.clickableMenuItem,
+              'menu_item', 'menu_item__available',
+              item.divided ? 'menu_item__divided' : null
+            ]" :key="index" @mouseenter="($event) => enterItem($event, item, index)" @click="itemClick(item)" v-else>
               <div class="menu_item_icon" v-if="hasIcon">
                 <i :class="item.icon" v-if="item.icon"></i>
               </div>
-              <span class="menu_item_label">{{item.label}}</span>
+              <span class="menu_item_label">{{ item.label }}</span>
               <div class="menu_item_expand_icon"></div>
             </div>
           </template>
@@ -235,9 +217,11 @@ export default {
   border-radius: 4px;
   padding: 8px 0;
 }
+
 .menu_body {
   display: block;
 }
+
 .menu_item {
   list-style: none;
   line-height: 32px;
@@ -250,33 +234,41 @@ export default {
   transition: 0.2s;
   border-bottom: 1px solid #00000000;
 }
+
 .menu_item__divided {
   border-bottom-color: #ebeef5;
 }
+
 .menu_item .menu_item_icon {
   margin-right: 8px;
   width: 13px;
 }
+
 .menu_item .menu_item_label {
   flex: 1;
 }
+
 .menu_item .menu_item_expand_icon {
   margin-left: 16px;
   font-size: 6px;
   width: 10px;
 }
+
 .menu_item__available {
   color: #606266;
   cursor: pointer;
 }
+
 .menu_item__available:hover {
   background: #ecf5ff;
   color: #409eff;
 }
+
 .menu_item__disabled {
   color: #c0c4cc;
   cursor: not-allowed;
 }
+
 .menu_item_expand {
   background: #ecf5ff;
   color: #409eff;
@@ -288,6 +280,7 @@ export default {
 .contextmenu-submenu-fade-leave-active {
   transition: opacity 0.1s;
 }
+
 .contextmenu-submenu-fade-enter,
 .contextmenu-submenu-fade-leave-to {
   opacity: 0;
