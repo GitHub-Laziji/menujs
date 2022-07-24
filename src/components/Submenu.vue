@@ -91,7 +91,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.position)
     this.visible = true;
     for (let item of this.items) {
       if (item.icon) {
