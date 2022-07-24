@@ -1,4 +1,4 @@
-# Vue Contextmenu
+# Vue Contextmenu (Vue2)
 
 ![](https://img.shields.io/github/languages/top/github-laziji/menujs.svg?style=flat)
 ![](https://img.shields.io/github/stars/gitHub-laziji/menujs.svg?style=social)
@@ -160,7 +160,7 @@ export default {
 | x | 菜单显示X坐标, 存在`event`则失效 | `number` | — | `0` |
 | y | 菜单显示Y坐标, 存在`event`则失效 | `number` | — | `0` |
 | zIndex | 菜单样式`z-index` | `number` | — | `2` |
-| customClass | 自定义菜单class | `string` | — | — |
+| customClass | 自定义菜单class, 使用`.custom-class .menu_item`定位菜单项 | `string` | — | — |
 | minWidth | 主菜单最小宽度 | `number` | — | `150` |
 
 ## MenuItemOptions
@@ -172,7 +172,7 @@ export default {
 | disabled | 是否禁用菜单项 | `boolean` | — | `false` |
 | hidden | 是否隐藏菜单项 | `boolean` | — | `false` |
 | divided | 是否显示分割线 | `boolean` | — | `false` |
-| customClass | 自定义子菜单class | `string` | — | — |
+| customClass | 自定义子菜单class, 使用`.custom-class .menu_item`定位菜单项 | `string` | — | 父级菜单customClass |
 | minWidth | 子菜单最小宽度 | `number` | — | `150` |
 | onClick | 菜单项点击事件 | `Function()` | — | — |
 | children | 子菜单结构信息 | `MenuItemOptions[]` | — | — |
