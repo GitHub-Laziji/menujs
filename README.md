@@ -170,6 +170,7 @@ export default {
 | label | 菜单项名称 | `string` | — | — |
 | icon | 菜单项图标, 生成`<i class="icon"></i>`元素 | `string` | — | — |
 | disabled | 是否禁用菜单项 | `boolean` | — | `false` |
+| hidden | 是否隐藏菜单项 | `boolean` | — | `false` |
 | divided | 是否显示分割线 | `boolean` | — | `false` |
 | customClass | 自定义子菜单class | `string` | — | — |
 | minWidth | 子菜单最小宽度 | `number` | — | `150` |

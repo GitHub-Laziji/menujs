@@ -1,6 +1,6 @@
 {
   "name": "vue-contextmenujs",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Vue contextmenu",
   "keywords": [
     "Vue",
@@ -24,5 +24,9 @@
   "homepage": "https://github.com/GitHub-Laziji/menujs#readme",
   "devDependencies": {
     "vue": "^2.6.10"
-  }
+  },
+  "files": [
+	  "index.js",
+		"/src"
+	]
 }
