@@ -1,13 +1,13 @@
 <template>
   <transition name="contextmenu-submenu-fade">
-    <div ref="menu" :class="[commonClass.menu, 'menu', customClass]"
+    <div ref="menu" :class="[CLASS_MENU, 'menu', customClass]"
       :style="{ left: style.left + 'px', top: style.top + 'px', minWidth: style.minWidth + 'px', zIndex: style.zIndex }"
       v-if="visible" @contextmenu="(e) => e.preventDefault()">
       <div class="menu_body">
         <template v-for="(item, index) of items">
           <template v-if="!item.hidden">
             <div :class="[
-              commonClass.menuItem, commonClass.unclickableMenuItem,
+              CLASS_MENU_ITEM, CLASS_MENU_ITEM_UNCLICKABLE,
               'menu_item', 'menu_item__disabled',
               item.divided ? 'menu_item__divided' : null
             ]" :key="index + '_disabled'" v-if="item.disabled">
@@ -18,7 +18,7 @@
               <div class="menu_item_expand_icon"></div>
             </div>
             <div :class="[
-              commonClass.menuItem, commonClass.unclickableMenuItem,
+              CLASS_MENU_ITEM, CLASS_MENU_ITEM_UNCLICKABLE,
               'menu_item', 'menu_item__available',
               activeSubmenu.index === index ? 'menu_item_expand' : null,
               item.divided ? 'menu_item__divided' : null
@@ -31,7 +31,7 @@
               <div class="menu_item_expand_icon">▶</div>
             </div>
             <div :class="[
-              commonClass.menuItem, commonClass.clickableMenuItem,
+              CLASS_MENU_ITEM, CLASS_MENU_ITEM_CLICKABLE,
               'menu_item', 'menu_item__available',
               item.divided ? 'menu_item__divided' : null
             ]" :key="index" @mouseenter="($event) => enterItem($event, item, index)" @click="itemClick(item)" v-else>
@@ -55,18 +55,20 @@ import {
   SUBMENU_Y_OFFSET,
   SUBMENU_OPEN_TREND_LEFT,
   SUBMENU_OPEN_TREND_RIGHT,
-  COMPONENT_NAME
+  COMPONENT_NAME,
+  CLASS_MENU,
+  CLASS_MENU_ITEM,
+  CLASS_MENU_ITEM_CLICKABLE,
+  CLASS_MENU_ITEM_UNCLICKABLE
 } from "../constant";
 export default {
   name: COMPONENT_NAME,
   data() {
     return {
-      commonClass: {
-        menu: null,
-        menuItem: null,
-        clickableMenuItem: null,
-        unclickableMenuItem: null
-      },
+      CLASS_MENU,
+      CLASS_MENU_ITEM,
+      CLASS_MENU_ITEM_CLICKABLE,
+      CLASS_MENU_ITEM_UNCLICKABLE,
       activeSubmenu: {
         index: null,
         instance: null
@@ -166,7 +168,6 @@ export default {
       this.activeSubmenu.instance = new SubmenuConstructor();
       this.activeSubmenu.instance.items = item.children;
       this.activeSubmenu.instance.openTrend = this.openTrend;
-      this.activeSubmenu.instance.commonClass = this.commonClass;
       this.activeSubmenu.instance.position = {
         x: menuItemClientRect.x + SUBMENU_X_OFFSET,
         y: menuItemClientRect.y + SUBMENU_Y_OFFSET,

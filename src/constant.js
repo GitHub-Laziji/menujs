@@ -3,3 +3,7 @@ export const SUBMENU_Y_OFFSET = -8;
 export const SUBMENU_OPEN_TREND_LEFT = "left";
 export const SUBMENU_OPEN_TREND_RIGHT = "right";
 export const COMPONENT_NAME = "contextmenu-submenu";
+export const CLASS_MENU = "contextmenu_menu";
+export const CLASS_MENU_ITEM = "contextmenu_menu_item";
+export const CLASS_MENU_ITEM_CLICKABLE = "contextmenu_menu_item_clickable";
+export const CLASS_MENU_ITEM_UNCLICKABLE = "contextmenu_menu_item_unclickable";

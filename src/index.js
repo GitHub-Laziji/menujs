@@ -1,34 +1,102 @@
 
 import Vue from 'vue';
-import Contextmenu from "./components/Contextmenu";
 import Submenu from "./components/Submenu";
-import { COMPONENT_NAME } from "./constant";
+import { getElementsByClassName } from "./util";
+import { COMPONENT_NAME, CLASS_MENU, CLASS_MENU_ITEM, CLASS_MENU_ITEM_UNCLICKABLE } from "./constant";
 
-const ContextmenuConstructor = Vue.extend(Contextmenu);
 Vue.component(COMPONENT_NAME, Submenu);
 
-function install(Vue) {
-  let lastInstance = null;
-  const ContextmenuProxy = function (options) {
-    let instance = new ContextmenuConstructor();
-    instance.items = options.items;
-    instance.position.x = options.x || 0;
-    instance.position.y = options.y || 0;
-    if (options.event) {
-      instance.position.x = options.event.clientX;
-      instance.position.y = options.event.clientY;
+class Contextmenu {
+
+  constructor(options) {
+    const SubmenuConstructor = Vue.component(COMPONENT_NAME);
+    this.instance = new SubmenuConstructor();
+    this.instance.items = options.items;
+    this.instance.position = {
+      x: options.event && options.event.clientX || this.position.x || 0,
+      y: options.event && options.event.clientY || this.position.y || 0,
+      width: 0,
+      height: 0
+    };
+    options.minWidth && (this.instance.style.minWidth = options.minWidth);
+    options.zIndex && (this.instance.style.zIndex = options.zIndex);
+    this.instance.customClass = options.customClass;
+    this.instance.$mount();
+    document.body.appendChild(this.instance.$el);
+    this.addListener();
+  }
+
+  mousewheelListener(e) {
+    this.close();
+  }
+
+  mouseDownListener(e) {
+    let el = e.target;
+    const menus = getElementsByClassName(CLASS_MENU);
+    while (!menus.find(m => m === el) && el.parentElement) {
+      el = el.parentElement;
     }
-    instance.customClass = options.customClass;
-    options.minWidth && (instance.style.minWidth = options.minWidth);
-    options.zIndex && (instance.style.zIndex = options.zIndex);
+    if (!menus.find(m => m === el)) {
+      this.close();
+    }
+  }
+
+  mouseClickListener(e) {
+    let el = e.target;
+    const menus = getElementsByClassName(CLASS_MENU);
+    const menuItems = getElementsByClassName(CLASS_MENU_ITEM);
+    const unclickableMenuItems = getElementsByClassName(CLASS_MENU_ITEM_UNCLICKABLE);
+    while (
+      !menus.find(m => m === el) &&
+      !menuItems.find(m => m === el) &&
+      el.parentElement
+    ) {
+      el = el.parentElement;
+    }
+    if (menuItems.find(m => m === el)) {
+      if (e.button !== 0 || unclickableMenuItems.find(m => m === el)) {
+        return;
+      }
+      this.close();
+      return;
+    }
+    if (!menus.find(m => m === el)) {
+      this.close();
+    }
+  }
+
+  addListener() {
+    this.mouseClickListenerProxy = (e) => this.mouseClickListener(e);
+    this.mouseDownListenerProxy = (e) => this.mouseDownListener(e);
+    this.mousewheelListenerProxy = (e) => this.mousewheelListener(e);
+
+    document.addEventListener("click", this.mouseClickListenerProxy);
+    document.addEventListener("mousedown", this.mouseDownListenerProxy);
+    document.addEventListener("mousewheel", this.mousewheelListenerProxy);
+  }
+
+  removeListener() {
+    document.removeEventListener("click", this.mouseClickListenerProxy);
+    document.removeEventListener("mousedown", this.mouseDownListenerProxy);
+    document.removeEventListener("mousewheel", this.mousewheelListenerProxy);
+  }
+
+  close() {
+    this.removeListener();
+    this.instance.close();
+  }
+}
+
+function install(Vue) {
+  let last = null;
+  const ContextmenuProxy = function (options) {
     ContextmenuProxy.destroy();
-    lastInstance = instance;
-    instance.$mount();
+    last = new Contextmenu(options);
   }
   ContextmenuProxy.destroy = function () {
-    if (lastInstance) {
-      lastInstance.close();
-      lastInstance = null;
+    if (last) {
+      last.close();
+      last = null;
     }
   }
   Vue.prototype.$contextmenu = ContextmenuProxy;
