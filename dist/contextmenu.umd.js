@@ -950,8 +950,8 @@ class Contextmenu {
     this.instance = new SubmenuConstructor();
     this.instance.items = options.items;
     this.instance.position = {
-      x: options.event && options.event.clientX || this.position.x || 0,
-      y: options.event && options.event.clientY || this.position.y || 0,
+      x: options.event && options.event.clientX || options.x || 0,
+      y: options.event && options.event.clientY || options.y || 0,
       width: 0,
       height: 0
     };
