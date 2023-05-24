@@ -1,8 +1,9 @@
 {
-  "name": "vue-contextmenujs",
-  "version": "1.4.9",
-  "description": "Vue contextmenu",
+  "name": "vue-contextmenujs-vite",
+  "version": "1.0.0",
+  "description": "Vue contextmenu for vite",
   "keywords": [
+    "vite",
     "Vue",
     "Contextmenu",
     "右键菜单"
@@ -14,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GitHub-Laziji/menujs.git"
+    "url": "git+https://github.com/TTcom/menujs/tree/ttcom_m"
   },
   "author": "laziji",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/GitHub-Laziji/menujs/issues"
+    "url": "https://github.com/TTcom/menujs/tree/ttcom_m"
   },
   "homepage": "https://github.com/GitHub-Laziji/menujs#readme",
   "devDependencies": {
