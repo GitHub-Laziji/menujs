@@ -1,6 +1,6 @@
 {
   "name": "vue-contextmenujs",
-  "version": "1.4.10",
+  "version": "1.4.11",
   "description": "Vue contextmenu",
   "keywords": [
     "Vue",
@@ -10,7 +10,8 @@
   "main": "index.js",
   "scripts": {
     "test": "vue-cli-service serve ./test/main.js ",
-    "build": "vue-cli-service build --target lib --name contextmenu index.js && rm ./dist/demo.html"
+    "build": "vue-cli-service build --target lib --name contextmenu index.js && rm ./dist/demo.html",
+    "publish": "npm publish"
   },
   "repository": {
     "type": "git",
