@@ -1,8 +1,8 @@
 
 import Vue from 'vue';
-import Submenu from "./components/Submenu";
-import { getElementsByClassName } from "./util";
-import { COMPONENT_NAME, CLASS_MENU, CLASS_MENU_ITEM, CLASS_MENU_ITEM_UNCLICKABLE } from "./constant";
+import Submenu from "./components/Submenu.vue";
+import { getElementsByClassName } from "./util.js";
+import { COMPONENT_NAME, CLASS_MENU, CLASS_MENU_ITEM, CLASS_MENU_ITEM_UNCLICKABLE } from "./constant.js";
 
 Vue.component(COMPONENT_NAME, Submenu);
 

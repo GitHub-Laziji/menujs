@@ -60,7 +60,7 @@ import {
   CLASS_MENU_ITEM,
   CLASS_MENU_ITEM_CLICKABLE,
   CLASS_MENU_ITEM_UNCLICKABLE
-} from "../constant";
+} from "../constant.js";
 export default {
   name: COMPONENT_NAME,
   data() {
