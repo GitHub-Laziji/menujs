@@ -27,6 +27,16 @@ class Contextmenu {
   }
 
   mousewheelListener(e) {
+    // 如果在组件内部滚动则不关闭
+    let el = e.target;
+    const menus = getElementsByClassName(CLASS_MENU);
+    while (!menus.find(m => m === el) && el.parentElement) {
+      el = el.parentElement;
+    }
+    if (menus.find(m => m === el)) {
+      return;
+    }
+    // 否则关闭
     this.close();
   }
 
