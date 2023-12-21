@@ -1,7 +1,7 @@
 <template>
   <transition name="contextmenu-submenu-fade">
     <div ref="menu" :class="[CLASS_MENU, 'menu', customClass]"
-      :style="{ left: style.left + 'px', top: style.top + 'px', minWidth: style.minWidth + 'px', zIndex: style.zIndex }"
+      :style="{ left: style.left + 'px', top: style.top + 'px', minWidth: style.minWidth + 'px',maxHeight: style.maxHeight + 'px', zIndex: style.zIndex }"
       v-if="visible" @contextmenu="(e) => e.preventDefault()">
       <div class="menu_body">
         <template v-for="(item, index) of items">
@@ -84,7 +84,8 @@ export default {
         left: 0,
         top: 0,
         zIndex: 2,
-        minWidth: 150
+        minWidth: 150,
+        maxHeight: 500
       },
       customClass: null,
       visible: false,
@@ -176,6 +177,8 @@ export default {
       };
       this.activeSubmenu.instance.style.minWidth =
         typeof item.minWidth === "number" ? item.minWidth : this.style.minWidth;
+      this.activeSubmenu.instance.style.maxHeight =
+        typeof item.maxHeight === "number" ? item.maxHeight : this.style.maxHeight;
       this.activeSubmenu.instance.style.zIndex = this.style.zIndex;
       this.activeSubmenu.instance.customClass =
         typeof item.customClass === "string"
@@ -217,8 +220,16 @@ export default {
   background: #fff;
   border-radius: 4px;
   padding: 8px 0;
+  overflow: auto;
 }
-
+.menu::-webkit-scrollbar {
+  width: 3px;
+}
+.menu::-webkit-scrollbar-thumb {
+  width: 3px;
+  background: #c8c8c8;
+  border-radius: 5px;
+}
 .menu_body {
   display: block;
 }
